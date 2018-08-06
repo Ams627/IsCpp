@@ -41,6 +41,8 @@ public:
     }
 
 private:
+    // for the given element, if its value is 1, push it onto the stack, mark it as "visited" by setting it to zero then return true.
+    // Otherwise return false.
     bool VisitElement(unsigned row, unsigned column)
     {
         if (matrix_[row][column])
@@ -58,12 +60,12 @@ private:
         {
             for (auto j = 0u; j < matrix_[i].size(); j++)
             {
-                if (matrix_[i][j])
+                if (VisitElement(i, j))
                 {
-                    VisitElement(i, j);
                     count_++;
                 }
 
+                // Now scan for neighbours - but for this example, DO NOT INCLUDE DIAGONAL NEIGHBOURS.
                 while (!elementStack_.empty())
                 {
                     auto& top = elementStack_.top();
