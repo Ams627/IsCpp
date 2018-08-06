@@ -104,7 +104,7 @@ int main()
     std::vector<std::vector<int>> i1b = { {0} };
 
     std::vector<std::vector<int>> i2a = { {1, 1}, {1, 1} };
-    std::vector<std::vector<int>> i2b = { {1, 0},{ 0, 1 } };
+    std::vector<std::vector<int>> i2b = { {1, 0}, {0, 1} };
 
     std::vector<std::vector<int>> iA = {
         {1, 0, 1, 1, 0},
