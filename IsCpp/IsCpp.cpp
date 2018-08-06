@@ -21,9 +21,8 @@ class FindIslands
     };
 
     std::vector<std::vector<int>> &matrix_;
+    std::stack<Element> elementStack_;
     int count_ = 0;
-    bool cached_ = false;
-    mutable std::stack<Element> elementStack_;
 
     const unsigned int ROWS;
     const unsigned int COLS;
@@ -104,8 +103,8 @@ int main()
     std::vector<std::vector<int>> i1a = { {1} };
     std::vector<std::vector<int>> i1b = { {0} };
 
-    std::vector<std::vector<int>> i2a = { { 1, 1}, {1, 1} };
-    std::vector<std::vector<int>> i2b = { { 1, 0 },{ 0, 1 } };
+    std::vector<std::vector<int>> i2a = { {1, 1}, {1, 1} };
+    std::vector<std::vector<int>> i2b = { {1, 0},{ 0, 1 } };
 
     std::vector<std::vector<int>> iA = {
         {1, 0, 1, 1, 0},
