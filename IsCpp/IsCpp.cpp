@@ -24,8 +24,8 @@ class FindIslands
     std::stack<Element> elementStack_;
     int count_ = 0;
 
-    const unsigned int ROWS;
-    const unsigned int COLS;
+    const size_t ROWS;
+    const size_t COLS;
 
 public:
     // constructor. PASSING THE MATRIX BY VALUE DELIBERATELY SO THAT WE DO NOT MODIFY ELEMENTS IN THE ORIGINAL WHEN MARKING THEM AS VISITED.
@@ -99,44 +99,82 @@ private:
 
 #define TESTMATRIX(m) std::cout << "Matrix " #m " contains " << FindIslands(m).Count() << " islands.\n"
 
-int main()
+int main(int argc, char **argv)
 {
-    std::vector<std::vector<int>> i0;
-    std::vector<std::vector<int>> i1a = { {1} };
-    std::vector<std::vector<int>> i1b = { {0} };
-
-    std::vector<std::vector<int>> i2a = { {1, 1}, {1, 1} };
-    std::vector<std::vector<int>> i2b = { {1, 0}, {0, 1} };
-
-    std::vector<std::vector<int>> iA = {
-        {1, 0, 1, 1, 0},
-        {0, 1, 0, 1, 0},
-        {0, 1, 0, 1, 0},
-        {0, 0, 0, 1, 0},
-        {0, 1, 0, 1, 0},
-        {0, 1, 1, 1, 0},
-    };
-
-    std::vector<std::vector<int>> big(1000);
-    for (auto i = 0u; i < 1000u; ++i)
+    if (argc > 1)
     {
-        for (auto j = 0u; j < 1000u; ++j)
+        while (--argc)
         {
-            big[i].push_back(1);
+            std::string filename = *++argv;
+
+            std::ifstream ifs(filename);
+            std::string line;
+            std::vector<std::vector<int>> matrix;
+
+            int linenumber = 1;
+            while (std::getline(ifs, line))
+            {
+                std::istringstream iss(line);
+                std::string token;
+                matrix.push_back(std::vector<int>());
+                while (std::getline(iss, token, ' '))
+                {
+                    if (token.length() > 0)
+                    {
+                        auto i = stoi(token);
+                        matrix.back().push_back(i);
+                    }
+                }
+
+                if (linenumber % 1000 == 0)
+                {
+                    std::cout << "line " << linenumber << "\n";
+                }
+                linenumber++;
+            }
+            std::cout << "Matrix read\n";
+            TESTMATRIX(matrix);
         }
     }
+    else
+    {
+        std::vector<std::vector<int>> i0;
+        std::vector<std::vector<int>> i1a = { {1} };
+        std::vector<std::vector<int>> i1b = { {0} };
 
-    big[500][500] = 0;
-    big[500][502] = 0;
-    big[499][501] = 0;
-    big[501][501] = 0;
+        std::vector<std::vector<int>> i2a = { {1, 1}, {1, 1} };
+        std::vector<std::vector<int>> i2b = { {1, 0}, {0, 1} };
 
-    TESTMATRIX(i0);
-    TESTMATRIX(i1a);
-    TESTMATRIX(i1b);
-    TESTMATRIX(i2a);
-    TESTMATRIX(i2b);
-    TESTMATRIX(iA);
-    TESTMATRIX(big);
-    std::cout << "finished\n";
+        std::vector<std::vector<int>> iA = {
+            {1, 0, 1, 1, 0},
+            {0, 1, 0, 1, 0},
+            {0, 1, 0, 1, 0},
+            {0, 0, 0, 1, 0},
+            {0, 1, 0, 1, 0},
+            {0, 1, 1, 1, 0},
+        };
+
+        std::vector<std::vector<int>> big(1000);
+        for (auto i = 0u; i < 1000u; ++i)
+        {
+            for (auto j = 0u; j < 1000u; ++j)
+            {
+                big[i].push_back(1);
+            }
+        }
+
+        big[500][500] = 0;
+        big[500][502] = 0;
+        big[499][501] = 0;
+        big[501][501] = 0;
+
+        TESTMATRIX(i0);
+        TESTMATRIX(i1a);
+        TESTMATRIX(i1b);
+        TESTMATRIX(i2a);
+        TESTMATRIX(i2b);
+        TESTMATRIX(iA);
+        TESTMATRIX(big);
+        std::cout << "finished\n";
+    }
 }
